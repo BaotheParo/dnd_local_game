@@ -1,13 +1,23 @@
 @import "tailwindcss";
 @import "@fontsource/cinzel/latin-500.css";
 @import "@fontsource/cinzel/latin-600.css";
+@import "@fontsource/cinzel/latin-ext-500.css";
+@import "@fontsource/cinzel/latin-ext-600.css";
+@import "@fontsource/lora/vietnamese-500.css";
+@import "@fontsource/lora/vietnamese-600.css";
 @import "@fontsource/dm-sans/latin-400.css";
 @import "@fontsource/dm-sans/latin-500.css";
 @import "@fontsource/dm-sans/latin-600.css";
+@import "@fontsource/dm-sans/latin-ext-400.css";
+@import "@fontsource/dm-sans/latin-ext-500.css";
+@import "@fontsource/dm-sans/latin-ext-600.css";
+@import "@fontsource/be-vietnam-pro/vietnamese-400.css";
+@import "@fontsource/be-vietnam-pro/vietnamese-500.css";
+@import "@fontsource/be-vietnam-pro/vietnamese-600.css";
 
 @theme {
-  --font-sans: "DM Sans", sans-serif;
-  --font-serif: "Cinzel", Georgia, serif;
+  --font-sans: "DM Sans", "Be Vietnam Pro", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --font-serif: "Cinzel", "Lora", Georgia, "Times New Roman", serif;
   --color-slate-950: #101b19;
   --color-slate-900: #182724;
   --color-slate-850: #20332f;

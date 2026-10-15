@@ -1,0 +1,458 @@
+{
+  "id": "last_lantern_delivery",
+  "version": "3.0.0",
+  "schemaVersion": 3,
+  "engineRange": "3",
+  "title": "The Last Lantern Delivery",
+  "language": "en",
+  "assets": [
+    "art/lantern-journey.png"
+  ],
+  "mission": {
+    "entryScene": "lantern_ferry",
+    "allowedModes": [
+      "cooperative",
+      "intrigue"
+    ],
+    "rosterRange": [
+      8,
+      8
+    ],
+    "resources": {
+      "supplies": 6,
+      "integrity": 5,
+      "alarm": 0
+    },
+    "endings": {
+      "delivered": "The replacement wick reaches North Lantern Station. A warm beam cuts through the mist. Earlier rescues and promises are recorded.",
+      "urgent": "Station rescuers pull the crew and wick to safety. The delivery succeeds under urgent conditions; every earlier rescue still matters.",
+      "evacuated": "The caravan cannot continue. Rescuers recover the chosen salvage, but the wick is not delivered. Earlier rescues remain part of the journal."
+    }
+  },
+  "intrigue": {
+    "certification": "mistbound-v3-eight",
+    "windows": [
+      "W1",
+      "W2"
+    ],
+    "agendaCounts": [
+      6,
+      1,
+      1
+    ],
+    "traceSize": 4,
+    "minIntersection": 2
+  },
+  "scenes": [
+    {
+      "id": "lantern_ferry",
+      "family": "choice",
+      "title": "Stranded at the Ferry",
+      "text": "Deliver a replacement wick to North Lantern Station. A family waits at the flooded ferry. The guild seal travels separately; losing it cannot undo the rescue. Decide how to help.",
+      "practice": "Everyone chooses on their own phone. Choices can change until closure. Ready does not apply effects. Plain speech is enough; acting is optional.",
+      "seconds": 90,
+      "default": "signal",
+      "options": [
+        {
+          "id": "aboard",
+          "title": "Take the family aboard",
+          "consequence": "Spend 1 Supply. Family safe; weight becomes seven. Mechanics needs one extra Shield in storm round two.",
+          "next": "lantern_bridge",
+          "cost": 1,
+          "conditions": [],
+          "effects": [
+            {
+              "op": "flag",
+              "key": "family_aboard",
+              "value": true
+            },
+            {
+              "op": "flag",
+              "key": "family_safe",
+              "value": true
+            }
+          ],
+          "engineer": false
+        },
+        {
+          "id": "equipment",
+          "title": "Send rescue equipment",
+          "consequence": "Spend 2 Supplies. Family safe by boat; no extra weight or Shield need.",
+          "next": "lantern_bridge",
+          "cost": 2,
+          "conditions": [],
+          "effects": [
+            {
+              "op": "flag",
+              "key": "family_by_boat",
+              "value": true
+            },
+            {
+              "op": "flag",
+              "key": "family_safe",
+              "value": true
+            }
+          ],
+          "engineer": false
+        },
+        {
+          "id": "signal",
+          "title": "Signal another crew",
+          "consequence": "Gain 1 Alarm. Rescue remains pending.",
+          "next": "lantern_bridge",
+          "cost": 0,
+          "conditions": [],
+          "effects": [
+            {
+              "op": "resource",
+              "key": "alarm",
+              "delta": 1
+            },
+            {
+              "op": "flag",
+              "key": "family_pending",
+              "value": true
+            }
+          ],
+          "engineer": false
+        }
+      ],
+      "cards": [],
+      "next": null,
+      "checkpoint": "none",
+      "puzzle": null
+    },
+    {
+      "id": "lantern_bridge",
+      "family": "deduction",
+      "title": "The Three Mist Bridges",
+      "text": "Three crossings emerge from the mist. Each crew member holds one authenticated fact. Share your cards, combine load, availability and destination, then each vote for a bridge. Two wrong submissions cost one Alarm each; then the route is explained.",
+      "practice": "Practice: a bridge can carry your load and still lead to the wrong gate. Each person shares a fact, then votes independently.",
+      "seconds": 90,
+      "default": "abstain",
+      "options": [
+        {
+          "id": "north",
+          "title": "North",
+          "consequence": "A wrong bridge adds one Alarm. A correct solution needs no roll.",
+          "next": "lantern_crossing",
+          "cost": 0,
+          "conditions": [],
+          "effects": [],
+          "engineer": false
+        },
+        {
+          "id": "middle",
+          "title": "Middle",
+          "consequence": "A wrong bridge adds one Alarm. A correct solution needs no roll.",
+          "next": "lantern_crossing",
+          "cost": 0,
+          "conditions": [],
+          "effects": [],
+          "engineer": false
+        },
+        {
+          "id": "south",
+          "title": "South",
+          "consequence": "A wrong bridge adds one Alarm. A correct solution needs no roll.",
+          "next": "lantern_crossing",
+          "cost": 0,
+          "conditions": [],
+          "effects": [],
+          "engineer": false
+        }
+      ],
+      "cards": [
+        {
+          "id": "lantern_fact_1",
+          "issuer": "Lantern route registry",
+          "type": "authenticated",
+          "text": "The vehicle weighs six. Essential cargo is already included and cannot be discarded.",
+          "factRefs": [
+            "bridge_fact_1"
+          ]
+        },
+        {
+          "id": "lantern_fact_2",
+          "issuer": "Lantern route registry",
+          "type": "authenticated",
+          "text": "Taking the family aboard adds one unit of weight.",
+          "factRefs": [
+            "bridge_fact_2"
+          ]
+        },
+        {
+          "id": "lantern_fact_3",
+          "issuer": "Lantern route registry",
+          "type": "authenticated",
+          "text": "North supports eight and leads through Sun.",
+          "factRefs": [
+            "bridge_fact_3"
+          ]
+        },
+        {
+          "id": "lantern_fact_4",
+          "issuer": "Lantern route registry",
+          "type": "authenticated",
+          "text": "Middle supports ten and leads through Moon.",
+          "factRefs": [
+            "bridge_fact_4"
+          ]
+        },
+        {
+          "id": "lantern_fact_5",
+          "issuer": "Lantern route registry",
+          "type": "authenticated",
+          "text": "South supports seven and leads through Leaf.",
+          "factRefs": [
+            "bridge_fact_5"
+          ]
+        },
+        {
+          "id": "lantern_fact_6",
+          "issuer": "Lantern route registry",
+          "type": "authenticated",
+          "text": "Rain is falling upstream.",
+          "factRefs": [
+            "bridge_fact_6"
+          ]
+        },
+        {
+          "id": "lantern_fact_7",
+          "issuer": "Lantern route registry",
+          "type": "authenticated",
+          "text": "Rain retracts Middle.",
+          "factRefs": [
+            "bridge_fact_7"
+          ]
+        },
+        {
+          "id": "lantern_fact_8",
+          "issuer": "Lantern route registry",
+          "type": "authenticated",
+          "text": "The destination is beyond Sun.",
+          "factRefs": [
+            "bridge_fact_8"
+          ]
+        }
+      ],
+      "next": "lantern_crossing",
+      "checkpoint": "none",
+      "puzzle": {
+        "answer": "north",
+        "maxAttempts": 2,
+        "hints": [
+          "Compare the required destination with each gate.",
+          "The destination is beyond Sun; which bridge leads there?",
+          "North is open and supports eight: enough for either passenger load."
+        ],
+        "bridges": [
+          {
+            "id": "north",
+            "capacity": 8,
+            "gate": "Sun",
+            "open": true
+          },
+          {
+            "id": "middle",
+            "capacity": 10,
+            "gate": "Moon",
+            "open": false
+          },
+          {
+            "id": "south",
+            "capacity": 7,
+            "gate": "Leaf",
+            "open": true
+          }
+        ],
+        "destination": "Sun",
+        "weights": [
+          6,
+          7
+        ]
+      }
+    },
+    {
+      "id": "lantern_crossing",
+      "family": "choice",
+      "title": "Cross the North Span",
+      "text": "The correct route is known. Choose how to cross; solving the route is never invalidated by a die roll. Any Effort pledges apply only if Risk is selected.",
+      "practice": "Everyone chooses on their own phone. Choices can change until closure. Ready does not apply effects. Plain speech is enough; acting is optional.",
+      "seconds": 90,
+      "default": "detour",
+      "options": [
+        {
+          "id": "repair",
+          "title": "Repair the crossing",
+          "consequence": "Spend 2 Supplies; Engineer may reduce to 1. Cross safely.",
+          "next": "lantern_market",
+          "cost": 2,
+          "conditions": [],
+          "effects": [],
+          "engineer": true
+        },
+        {
+          "id": "detour",
+          "title": "Take the long path",
+          "consequence": "Gain 2 Alarm. Continue even if this marks the journey urgent.",
+          "next": "lantern_market",
+          "cost": 0,
+          "conditions": [],
+          "effects": [
+            {
+              "op": "resource",
+              "key": "alarm",
+              "delta": 2
+            }
+          ],
+          "engineer": false
+        },
+        {
+          "id": "risk",
+          "title": "Risk the crossing — DC 13",
+          "consequence": "Roll server d20 plus up to four pledged Effort. Failure loses 2 Integrity; success loses none.",
+          "next": "lantern_market",
+          "cost": 0,
+          "conditions": [],
+          "effects": [
+            {
+              "op": "risk",
+              "dc": 13,
+              "failureIntegrity": 2
+            }
+          ],
+          "engineer": false
+        }
+      ],
+      "cards": [],
+      "next": null,
+      "checkpoint": "none",
+      "puzzle": null
+    },
+    {
+      "id": "lantern_market",
+      "family": "negotiation",
+      "title": "Ilya’s One-Time Offer",
+      "text": "Ilya needs a signal bell to keep the ferry running and cannot abandon its passengers. Your decorative bell is an acceptable trade. Each player votes: immediate protection or a memento?",
+      "practice": "Everyone chooses on their own phone. Choices can change until closure. Ready does not apply effects. Plain speech is enough; acting is optional.",
+      "seconds": 90,
+      "default": "trade",
+      "options": [
+        {
+          "id": "trade",
+          "title": "Offer the decorative bell",
+          "consequence": "Give up the bell; first storm shield purchase costs 1 Supply instead of 2. Does not stack with Engineer.",
+          "next": "lantern_rest",
+          "cost": 0,
+          "conditions": [],
+          "effects": [
+            {
+              "op": "flag",
+              "key": "bell",
+              "value": false
+            },
+            {
+              "op": "flag",
+              "key": "voucher",
+              "value": true
+            },
+            {
+              "op": "flag",
+              "key": "ferry_trust",
+              "value": true
+            }
+          ],
+          "engineer": false
+        },
+        {
+          "id": "keep",
+          "title": "Keep the bell",
+          "consequence": "Retain the bell as a memento. No shield voucher.",
+          "next": "lantern_rest",
+          "cost": 0,
+          "conditions": [],
+          "effects": [],
+          "engineer": false
+        }
+      ],
+      "cards": [],
+      "next": null,
+      "checkpoint": "none",
+      "puzzle": null
+    },
+    {
+      "id": "lantern_rest",
+      "family": "rest",
+      "title": "The Warm Kiln",
+      "text": "A short rest allows one hull repair. An Engineer may consent to reduce its cost by one. After this stop, intrigue mode opens its first private arrangement and optional Watch vote.",
+      "practice": "Everyone chooses on their own phone. Choices can change until closure. Ready does not apply effects. Plain speech is enough; acting is optional.",
+      "seconds": 90,
+      "default": "rest",
+      "options": [
+        {
+          "id": "repair_hull",
+          "title": "Repair the hull",
+          "consequence": "Spend 3 Supplies (2 with one consenting Engineer), gain 1 Integrity up to six.",
+          "next": "lantern_storm",
+          "cost": 3,
+          "conditions": [
+            {
+              "op": "resource",
+              "key": "integrity",
+              "min": 0
+            }
+          ],
+          "effects": [
+            {
+              "op": "repair"
+            }
+          ],
+          "engineer": true
+        },
+        {
+          "id": "rest",
+          "title": "Rest without repair",
+          "consequence": "Keep Supplies and continue.",
+          "next": "lantern_storm",
+          "cost": 0,
+          "conditions": [],
+          "effects": [],
+          "engineer": false
+        }
+      ],
+      "cards": [],
+      "next": null,
+      "checkpoint": "rest",
+      "puzzle": null
+    },
+    {
+      "id": "lantern_storm",
+      "family": "allocation",
+      "title": "The Living Mist",
+      "text": "Three rounds: Pathfinder is threatened first, Mechanics second, both third. Two Shields protect a threatened squad; Mechanics needs three in round two if the family is aboard. Three Supply actions earn one Supply and a power round. Three Repel remove one Alarm. Achieve two power rounds to avoid late delivery. Missing actions are Shield in your own squad.",
+      "practice": "Practice for one minute: eight actions must cover protection and power. Two Pathfinder Shield + three Supply + three Repel works in round one. Private arrangements never replace these actions.",
+      "seconds": 60,
+      "default": "abstain",
+      "options": [],
+      "cards": [],
+      "next": "lantern_end",
+      "checkpoint": "none",
+      "puzzle": null
+    },
+    {
+      "id": "lantern_end",
+      "family": "ending",
+      "title": "North Lantern Station",
+      "text": "The wick reaches its destination. Resolve security separately and remember the journey.",
+      "practice": "Everyone chooses on their own phone. Choices can change until closure. Ready does not apply effects. Plain speech is enough; acting is optional.",
+      "seconds": 90,
+      "default": "abstain",
+      "options": [],
+      "cards": [],
+      "next": null,
+      "checkpoint": "none",
+      "puzzle": null
+    }
+  ]
+}

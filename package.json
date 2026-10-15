@@ -4,17 +4,23 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "dev": "vite --port=3000 --host=0.0.0.0",
+    "dev": "tsx server/index.ts",
+    "start": "tsx server/index.ts --production",
+    "dev:simulator": "vite --port=3001 --host=127.0.0.1 --open /simulator.html",
     "build": "vite build",
     "preview": "vite preview",
     "clean": "rm -rf dist server.js",
     "lint": "tsc --noEmit",
     "test": "tsx --test tests/*.test.ts",
-    "test:ui": "node scripts/review-ui.mjs"
+    "test:ui": "node scripts/review-lan.mjs",
+    "test:ui:production": "node scripts/review-lan.mjs --production",
+    "test:simulator-ui": "node scripts/review-ui.mjs"
   },
   "dependencies": {
+    "@fontsource/be-vietnam-pro": "^5.3.0",
     "@fontsource/cinzel": "^5.2.0",
     "@fontsource/dm-sans": "^5.2.0",
+    "@fontsource/lora": "^5.3.0",
     "@google/genai": "^2.4.0",
     "@tailwindcss/vite": "^4.3.3",
     "@vitejs/plugin-react": "^6.1.1",

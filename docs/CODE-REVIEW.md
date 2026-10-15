@@ -1,5 +1,7 @@
 # Specification review — 15 October 2026
 
+Historical review of the retained v2 browser simulator. Its server-related gaps are addressed by the separate v3 implementation; see [README](../README.md) and [P00 GM expansion](P00-GM-expansion.md). The legacy simulator still has the limitations recorded below.
+
 Reviewed the source against `INSTRUCTION.md` version 2.0. This is an illustrated browser prototype, not the completed LAN application described in that document.
 
 ## Corrected in this pass

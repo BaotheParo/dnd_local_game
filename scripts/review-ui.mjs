@@ -1,5 +1,6 @@
 import { chromium } from "@playwright/test";
 import { mkdir } from "node:fs/promises";
+const simulatorUrl = process.env.SIMULATOR_URL || "http://localhost:3001/simulator.html";
 
 await mkdir("output/review", { recursive: true });
 const browser = await chromium.launch({
@@ -23,7 +24,7 @@ context.on("request", (request) => {
     externalRequests.push(request.url());
 });
 page.on("pageerror", (error) => errors.push(error.message));
-await page.goto("http://localhost:3000/?view=tv");
+await page.goto(`${simulatorUrl}?view=tv`);
 await page.evaluate(() => {
   localStorage.removeItem("mistbound_state_v2");
 });
@@ -62,7 +63,7 @@ for (const width of [390, 768, 1024]) {
   });
   const p = await mobile.newPage();
   p.on("pageerror", (error) => errors.push(error.message));
-  await p.goto("http://localhost:3000/?view=tv");
+  await p.goto(`${simulatorUrl}?view=tv`);
   await p.getByRole("heading", { name: /Đoàn Lữ Hành Xuyên Sương|The Mistbound/i }).waitFor();
   await p.evaluate(() => document.fonts.ready);
   const overflow = await p.evaluate(

@@ -1,5 +1,7 @@
 # Review contract — 15 October 2026
 
+Historical v2 simulator review. The v3 LAN room follows [P00-GM-expansion.md](P00-GM-expansion.md) and INSTRUCTION2.md instead. This file does not describe the new server.
+
 Source of truth: `INSTRUCTION.md`, version 2.0. This pass prioritizes the requested art direction, readable interfaces, and verified corrections to the existing browser prototype. It does not claim to complete the LAN release milestones.
 
 ## Rules contract

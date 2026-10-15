@@ -1,0 +1,470 @@
+{
+  "id": "ferry_medicine_exchange",
+  "version": "3.0.0",
+  "schemaVersion": 3,
+  "engineRange": "3",
+  "title": "The Ferry Medicine Exchange",
+  "language": "en",
+  "assets": [
+    "art/lantern-journey.png"
+  ],
+  "mission": {
+    "entryScene": "medicine_trade",
+    "allowedModes": [
+      "cooperative"
+    ],
+    "rosterRange": [
+      8,
+      8
+    ],
+    "resources": {
+      "supplies": 6,
+      "integrity": 5,
+      "alarm": 0
+    },
+    "endings": {
+      "delivered": "The medicine and replacement wick arrive intact. Nara’s exchange and any return promise are entered in the journal.",
+      "urgent": "Station rescuers receive the medicine and wick under urgent conditions. The exchange obligations remain.",
+      "evacuated": "The wagon is abandoned. The salvage choice and earlier promises are recorded; delivery fails."
+    }
+  },
+  "intrigue": null,
+  "scenes": [
+    {
+      "id": "medicine_trade",
+      "family": "negotiation",
+      "title": "Nara’s Medicine Ledger",
+      "text": "Nara must supply residents as well as your station. Each player holds a different documented constraint. Share them and compare three offers. There is no unrestricted bargaining engine: agree on one posted exchange.",
+      "practice": "Everyone chooses on their own phone. Choices can change until closure. Ready does not apply effects. Plain speech is enough; acting is optional.",
+      "seconds": 90,
+      "default": "promise",
+      "options": [
+        {
+          "id": "pay",
+          "title": "Buy the sealed medicine",
+          "consequence": "Spend 3 Supplies; keep the bell and make no promise.",
+          "next": "medicine_bridge",
+          "cost": 3,
+          "conditions": [],
+          "effects": [
+            {
+              "op": "flag",
+              "key": "medicine_obtained",
+              "value": true
+            },
+            {
+              "op": "flag",
+              "key": "paid_fairly",
+              "value": true
+            }
+          ],
+          "engineer": false
+        },
+        {
+          "id": "bell",
+          "title": "Exchange the bell and one Supply",
+          "consequence": "Spend 1 Supply and the bell. Gain medicine and ferry trust.",
+          "next": "medicine_bridge",
+          "cost": 1,
+          "conditions": [],
+          "effects": [
+            {
+              "op": "flag",
+              "key": "medicine_obtained",
+              "value": true
+            },
+            {
+              "op": "flag",
+              "key": "bell",
+              "value": false
+            },
+            {
+              "op": "flag",
+              "key": "ferry_trust",
+              "value": true
+            }
+          ],
+          "engineer": false
+        },
+        {
+          "id": "promise",
+          "title": "Accept a documented return journey",
+          "consequence": "Gain medicine without spending Supplies; gain 1 Alarm and record a return promise.",
+          "next": "medicine_bridge",
+          "cost": 0,
+          "conditions": [],
+          "effects": [
+            {
+              "op": "flag",
+              "key": "medicine_obtained",
+              "value": true
+            },
+            {
+              "op": "flag",
+              "key": "return_promise",
+              "value": true
+            },
+            {
+              "op": "resource",
+              "key": "alarm",
+              "delta": 1
+            }
+          ],
+          "engineer": false
+        }
+      ],
+      "cards": [
+        {
+          "id": "medicine_offer_1",
+          "issuer": "Nara’s posted exchange ledger",
+          "type": "authenticated",
+          "text": "Nara will release the essential medicine through any one of the three posted offers.",
+          "factRefs": [
+            "offer_constraint_1"
+          ]
+        },
+        {
+          "id": "medicine_offer_2",
+          "issuer": "Nara’s posted exchange ledger",
+          "type": "authenticated",
+          "text": "The station needs sealed medicine; opening the package is not a valid offer.",
+          "factRefs": [
+            "offer_constraint_2"
+          ]
+        },
+        {
+          "id": "medicine_offer_3",
+          "issuer": "Nara’s posted exchange ledger",
+          "type": "authenticated",
+          "text": "The decorative bell can serve the ferry as a warning signal.",
+          "factRefs": [
+            "offer_constraint_3"
+          ]
+        },
+        {
+          "id": "medicine_offer_4",
+          "issuer": "Nara’s posted exchange ledger",
+          "type": "authenticated",
+          "text": "Trading the bell improves ferry trust but removes the crew’s memento.",
+          "factRefs": [
+            "offer_constraint_4"
+          ]
+        },
+        {
+          "id": "medicine_offer_5",
+          "issuer": "Nara’s posted exchange ledger",
+          "type": "authenticated",
+          "text": "Paying three Supplies creates no future obligation.",
+          "factRefs": [
+            "offer_constraint_5"
+          ]
+        },
+        {
+          "id": "medicine_offer_6",
+          "issuer": "Nara’s posted exchange ledger",
+          "type": "authenticated",
+          "text": "A documented return journey costs time now: one Alarm.",
+          "factRefs": [
+            "offer_constraint_6"
+          ]
+        },
+        {
+          "id": "medicine_offer_7",
+          "issuer": "Nara’s posted exchange ledger",
+          "type": "authenticated",
+          "text": "No offer grants an additional storm shield voucher.",
+          "factRefs": [
+            "offer_constraint_7"
+          ]
+        },
+        {
+          "id": "medicine_offer_8",
+          "issuer": "Nara’s posted exchange ledger",
+          "type": "authenticated",
+          "text": "The coming storm needs at least two powered rounds; preserving Supplies may help protection.",
+          "factRefs": [
+            "offer_constraint_8"
+          ]
+        }
+      ],
+      "next": null,
+      "checkpoint": "none",
+      "puzzle": null
+    },
+    {
+      "id": "medicine_bridge",
+      "family": "deduction",
+      "title": "The Three Mist Bridges",
+      "text": "Three crossings emerge from the mist. Each crew member holds one authenticated fact. Share your cards, combine load, availability and destination, then each vote for a bridge. Two wrong submissions cost one Alarm each; then the route is explained.",
+      "practice": "Practice: a bridge can carry your load and still lead to the wrong gate. Each person shares a fact, then votes independently.",
+      "seconds": 90,
+      "default": "abstain",
+      "options": [
+        {
+          "id": "north",
+          "title": "North",
+          "consequence": "A wrong bridge adds one Alarm. A correct solution needs no roll.",
+          "next": "medicine_route",
+          "cost": 0,
+          "conditions": [],
+          "effects": [],
+          "engineer": false
+        },
+        {
+          "id": "middle",
+          "title": "Middle",
+          "consequence": "A wrong bridge adds one Alarm. A correct solution needs no roll.",
+          "next": "medicine_route",
+          "cost": 0,
+          "conditions": [],
+          "effects": [],
+          "engineer": false
+        },
+        {
+          "id": "south",
+          "title": "South",
+          "consequence": "A wrong bridge adds one Alarm. A correct solution needs no roll.",
+          "next": "medicine_route",
+          "cost": 0,
+          "conditions": [],
+          "effects": [],
+          "engineer": false
+        }
+      ],
+      "cards": [
+        {
+          "id": "medicine_fact_1",
+          "issuer": "Lantern route registry",
+          "type": "authenticated",
+          "text": "The vehicle weighs six. Essential cargo is already included and cannot be discarded.",
+          "factRefs": [
+            "bridge_fact_1"
+          ]
+        },
+        {
+          "id": "medicine_fact_2",
+          "issuer": "Lantern route registry",
+          "type": "authenticated",
+          "text": "Taking the family aboard adds one unit of weight.",
+          "factRefs": [
+            "bridge_fact_2"
+          ]
+        },
+        {
+          "id": "medicine_fact_3",
+          "issuer": "Lantern route registry",
+          "type": "authenticated",
+          "text": "North supports eight and leads through Sun.",
+          "factRefs": [
+            "bridge_fact_3"
+          ]
+        },
+        {
+          "id": "medicine_fact_4",
+          "issuer": "Lantern route registry",
+          "type": "authenticated",
+          "text": "Middle supports ten and leads through Moon.",
+          "factRefs": [
+            "bridge_fact_4"
+          ]
+        },
+        {
+          "id": "medicine_fact_5",
+          "issuer": "Lantern route registry",
+          "type": "authenticated",
+          "text": "South supports seven and leads through Leaf.",
+          "factRefs": [
+            "bridge_fact_5"
+          ]
+        },
+        {
+          "id": "medicine_fact_6",
+          "issuer": "Lantern route registry",
+          "type": "authenticated",
+          "text": "Rain is falling upstream.",
+          "factRefs": [
+            "bridge_fact_6"
+          ]
+        },
+        {
+          "id": "medicine_fact_7",
+          "issuer": "Lantern route registry",
+          "type": "authenticated",
+          "text": "Rain retracts Middle.",
+          "factRefs": [
+            "bridge_fact_7"
+          ]
+        },
+        {
+          "id": "medicine_fact_8",
+          "issuer": "Lantern route registry",
+          "type": "authenticated",
+          "text": "The destination is beyond Sun.",
+          "factRefs": [
+            "bridge_fact_8"
+          ]
+        }
+      ],
+      "next": "medicine_route",
+      "checkpoint": "none",
+      "puzzle": {
+        "answer": "north",
+        "maxAttempts": 2,
+        "hints": [
+          "Compare the required destination with each gate.",
+          "The destination is beyond Sun; which bridge leads there?",
+          "North is open and supports eight: enough for either passenger load."
+        ],
+        "bridges": [
+          {
+            "id": "north",
+            "capacity": 8,
+            "gate": "Sun",
+            "open": true
+          },
+          {
+            "id": "middle",
+            "capacity": 10,
+            "gate": "Moon",
+            "open": false
+          },
+          {
+            "id": "south",
+            "capacity": 7,
+            "gate": "Leaf",
+            "open": true
+          }
+        ],
+        "destination": "Sun",
+        "weights": [
+          6,
+          7
+        ]
+      }
+    },
+    {
+      "id": "medicine_route",
+      "family": "choice",
+      "title": "The Loaded Causeway",
+      "text": "The medicine is sealed in the wagon. The correct bridge still needs a crossing plan.",
+      "practice": "Everyone chooses on their own phone. Choices can change until closure. Ready does not apply effects. Plain speech is enough; acting is optional.",
+      "seconds": 90,
+      "default": "long",
+      "options": [
+        {
+          "id": "brace",
+          "title": "Brace the causeway",
+          "consequence": "Spend 2 Supplies; one Engineer may reduce the cost to 1.",
+          "next": "medicine_rest",
+          "cost": 2,
+          "conditions": [],
+          "effects": [],
+          "engineer": true
+        },
+        {
+          "id": "long",
+          "title": "Use the ridge road",
+          "consequence": "Gain 2 Alarm and preserve Supplies.",
+          "next": "medicine_rest",
+          "cost": 0,
+          "conditions": [],
+          "effects": [
+            {
+              "op": "resource",
+              "key": "alarm",
+              "delta": 2
+            }
+          ],
+          "engineer": false
+        },
+        {
+          "id": "chance",
+          "title": "Risk the span — DC 13",
+          "consequence": "Pledge up to four Effort; failure loses 2 Integrity.",
+          "next": "medicine_rest",
+          "cost": 0,
+          "conditions": [],
+          "effects": [
+            {
+              "op": "risk",
+              "dc": 13,
+              "failureIntegrity": 2
+            }
+          ],
+          "engineer": false
+        }
+      ],
+      "cards": [],
+      "next": null,
+      "checkpoint": "none",
+      "puzzle": null
+    },
+    {
+      "id": "medicine_rest",
+      "family": "rest",
+      "title": "Orin’s Workshop",
+      "text": "Orin can restore one Integrity before the storm. Your chosen medicine exchange remains recorded in the season journal.",
+      "practice": "Everyone chooses on their own phone. Choices can change until closure. Ready does not apply effects. Plain speech is enough; acting is optional.",
+      "seconds": 90,
+      "default": "leave",
+      "options": [
+        {
+          "id": "fix",
+          "title": "Buy one hull repair",
+          "consequence": "Spend 3 Supplies (2 with Engineer), restore 1 Integrity.",
+          "next": "medicine_storm",
+          "cost": 3,
+          "conditions": [],
+          "effects": [
+            {
+              "op": "repair"
+            }
+          ],
+          "engineer": true
+        },
+        {
+          "id": "leave",
+          "title": "Keep your resources",
+          "consequence": "Continue with current Integrity.",
+          "next": "medicine_storm",
+          "cost": 0,
+          "conditions": [],
+          "effects": [],
+          "engineer": false
+        }
+      ],
+      "cards": [],
+      "next": null,
+      "checkpoint": "rest",
+      "puzzle": null
+    },
+    {
+      "id": "medicine_storm",
+      "family": "allocation",
+      "title": "The Living Mist",
+      "text": "Three rounds: Pathfinder is threatened first, Mechanics second, both third. Two Shields protect a threatened squad; Mechanics needs three in round two if the family is aboard. Three Supply actions earn one Supply and a power round. Three Repel remove one Alarm. Achieve two power rounds to avoid late delivery. Missing actions are Shield in your own squad.",
+      "practice": "Practice for one minute: eight actions must cover protection and power. Two Pathfinder Shield + three Supply + three Repel works in round one. Private arrangements never replace these actions.",
+      "seconds": 60,
+      "default": "abstain",
+      "options": [],
+      "cards": [],
+      "next": "medicine_end",
+      "checkpoint": "none",
+      "puzzle": null
+    },
+    {
+      "id": "medicine_end",
+      "family": "ending",
+      "title": "The Medicine Lantern",
+      "text": "Keep the medicine promise and the station’s lantern lit.",
+      "practice": "Everyone chooses on their own phone. Choices can change until closure. Ready does not apply effects. Plain speech is enough; acting is optional.",
+      "seconds": 90,
+      "default": "abstain",
+      "options": [],
+      "cards": [],
+      "next": null,
+      "checkpoint": "none",
+      "puzzle": null
+    }
+  ]
+}
