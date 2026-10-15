@@ -1,0 +1,6 @@
+{
+  "name": "The Mistbound Caravan",
+  "description": "A local cooperative fantasy adventure game for 3-9 players using phones and a shared TV screen. Navigate magical fog, solve puzzles, and coordinate actions together.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
